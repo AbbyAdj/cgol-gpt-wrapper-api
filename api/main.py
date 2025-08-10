@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from openai import OpenAI
 from dotenv import load_dotenv
-from wrapper.wrapper import client_response
+from ai_client.wrapper import client_response
 
 load_dotenv(override=True)
 
