@@ -1,3 +1,5 @@
+"""AI client wrapper logic"""
+
 import json
 from pprint import pprint
 from openai import OpenAI, api_key
@@ -29,7 +31,8 @@ def client_response(client: OpenAI, user_input: str)->str:
     input_list = [
         {"role": "system", "content": "Parse the prompt and use it to call the run_game function as many times as needed"},
         {"role": "system", "content": "If you are asked to generate/decide the words, come up with N number of words that do not share similarities"},
-        {"role": "system", "content": "Format your response well, do not asterix."},
+        {"role": "system", "content": "Format your response well, do not add any asterix."},
+        {"role": "system", "content": "If a word is not provided by the user, return an appropriate error message."},
         {"role": "user", "content": user_input}
     ]
 
@@ -52,13 +55,11 @@ def client_response(client: OpenAI, user_input: str)->str:
             function_call_arguments = json.loads(item.arguments)
            
 
-            # 3. Execute the function logic for get_horoscope
             result = run_game(function_call_arguments["word"])
 
-            # 4. Provide function call results to the model
             input_list.append({
                 "type": "function_call_output",
-                "call_id": function_call.call_id, # type: ignore
+                "call_id": function_call.call_id,
                 "output": json.dumps(result),
             })
 
