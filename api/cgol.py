@@ -127,4 +127,3 @@ def run_game(word: str, generations: int = 1000):
 
 if __name__ == "__main__":
     print(run_game("monumental"))
-    pass

@@ -13,8 +13,9 @@ from ai_client.wrapper import client_response
 load_dotenv(override=True)
 
 API_KEY = os.environ.get("API_KEY")
-client = OpenAI(api_key=API_KEY)
+PASSWORD = os.environ.get("PASSWORD")
 
+client = OpenAI(api_key=API_KEY)
 app = FastAPI()
 templates = Jinja2Templates(directory="api/templates")
 
@@ -24,7 +25,7 @@ def homepage(request: Request):
     return templates.TemplateResponse("frontend.html", {"request": request})
 
 
-@app.post("/", status_code=201)
+@app.post("/results", status_code=201)
 def run_cgol_game(user_input: str =  Form(...)):
     if not user_input:
         return JSONResponse(content={"server_response": None})
