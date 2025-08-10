@@ -1,4 +1,4 @@
-"""CGOL LOGIC"""
+"""Main game logic"""
 
 from collections import defaultdict, deque
 
@@ -22,11 +22,13 @@ CELL_NEIGHBOURS = (
 class MaxGenerationsReached(BaseException):
     pass
 
+
 class MaxRowsExceeded(BaseException):
     pass
 
 
 # TODO: Raise error for really long word
+
 
 def convert_to_ascii_bitmask(word: str) -> list[str]:
     result = []
@@ -96,7 +98,7 @@ def display_grid(live_cells, bounding_box=(0, 0, ROWS, COLUMNS)):
     return "\n".join(grid)
 
 
-def check_end_conditons(curr_generation: set[tuple[int, int]])->bool:
+def check_end_conditons(curr_generation: set[tuple[int, int]]) -> bool:
     if len(LIVE_CELL_HISTORY) == 0:
         LIVE_CELL_HISTORY.append(curr_generation)
         return False
@@ -115,7 +117,7 @@ def check_end_conditons(curr_generation: set[tuple[int, int]])->bool:
         return False
 
 
-def run_game(word: str, generations: int =1000):
+def run_game(word: str, generations: int = 1000):
     curr_gen_number = 0
     ascii_bits = convert_to_ascii_bitmask(word)
     curr_gen = generate_initial_live_cells(ascii_bits)
@@ -130,12 +132,9 @@ def run_game(word: str, generations: int =1000):
         curr_gen = next_gen
         curr_gen_number += 1
 
-    # if curr_gen_number >= generations:
-    #     raise MaxGenerationsReached
-
     return {"generations": curr_gen_number, "score": total_cells_spawned}
 
 
 if __name__ == "__main__":
-    print(run_game("hyper"))
+    print(run_game("Nigeria"))
     pass
