@@ -29,7 +29,7 @@
       padding: 2rem 3rem;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      width: 350px;
+      width: 700px;
       text-align: center;
       animation: fadeIn 0.8s ease forwards;
     }
@@ -61,6 +61,7 @@
     }
 
     button {
+      position: relative;
       background-color: #4a90e2;
       color: white;
       border: none;
@@ -81,36 +82,92 @@
       background-color: #a0bde5;
       cursor: not-allowed;
     }
+    .loading {
+      background-color: #357ABD;
+    }
+    .loading::after {
+      content: "";
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 2px solid white;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: translateY(-50%) rotate(0deg); }
+      100% { transform: translateY(-50%) rotate(360deg); }
+    }
 
     .message {
+      width: 100%; 
       margin-top: 1.2rem;
-      padding: 0.8rem;
+      padding: 1rem 1.2rem; 
       background: #e8f0fe;
       border-radius: 8px;
       color: #1a3c6e;
       font-weight: 600;
+      font-size: 1.1rem; 
+      min-height: 3rem; 
       animation: fadeIn 0.5s ease forwards;
+      box-sizing: border-box; 
+      white-space: pre-wrap;
+    }
+    .welcome {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #4a90e2;
+      color: white;
+      padding: 1rem 1.5rem;
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 1000;
+      line-height: 1.4;
+    }
+    #responseRenderArea {
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
+<div
+    id="topBanner"
+    class="welcome"
+  >
+    <div>Welcome!</div>
+    <div style="margin-top: 0.3rem; font-weight: 400; font-size: 0.95rem;">
+      Enter your prompt below to run the Conway’s Game of Life simulation.<br />
+      The prompt will return either the number of <strong>generations</strong>, a <strong>score</strong>, or <strong>both</strong> depending on your input.
+    </div>
+  </div>
   <div class="container">
     <h2>Enter Your Prompt</h2>
 
     <form method="post" id="cgolForm">
-      <input type="text" name="user_input" placeholder="Type something...e.g. how many generations is in the word 'monument'" required />
-      <button type="submit">Submit</button>
+      <input type="text" name="user_input" placeholder="Type something...e.g. Generate 3 random words and tell me the highest Conway score." required />
+      <button type="submit" id="submit_button">Submit</button>
     </form>
 
     <div class="message" id="responseRenderArea"></div>
+  </div>  
+
 
   <script>
     const form = document.getElementById('cgolForm');
     const responseRenderArea = document.getElementById('responseRenderArea'); 
 
     form.addEventListener('submit', async (event) => {
-      event.preventDefault();  // Prevent page reload
-
+      event.preventDefault();
+      document.getElementById("submit_button").classList.add("loading")
       const formData = new FormData(form);
       const userInput = formData.get('user_input');
 
@@ -118,8 +175,10 @@
         method: 'POST',
         body: formData,
       });
+      document.getElementById("submit_button").classList.remove("loading")
 
       if (response.ok) {
+
         const data = await response.json();
         responseRenderArea.textContent = data.server_response || "No response";
       } else {
@@ -127,5 +186,30 @@
       }
     });
   </script>
+
+  <footer
+  style="
+    background: #f0f4ff;
+    color: #1a3c6e;
+    text-align: center;
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    z-index: 1000;
+  "
+  >
+  <p>
+    Developed by Abigail Adjei | View the project on
+    <a href="https://github.com/AbbyAdj/cgol-llm-integration-api" target="_blank" rel="noopener noreferrer" style="color: #4a90e2; text-decoration: none;">
+      GitHub
+    </a>
+  </p>
+  </footer>
+
 </body>
 </html>
