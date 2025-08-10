@@ -1,6 +1,7 @@
 """Fastapi logic with endpoints"""
 from pprint import pprint
 import os
+import time
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import JSONResponse,  HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -27,7 +28,6 @@ def homepage(request: Request):
 def run_cgol_game(user_input: str =  Form(...)):
     if not user_input:
         return JSONResponse(content={"server_response": None})
-
     server_response = client_response(client, user_input=user_input)
     return JSONResponse(content={"server_response": server_response}, status_code=201)
 
