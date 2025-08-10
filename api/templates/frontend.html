@@ -95,16 +95,37 @@
 </head>
 <body>
   <div class="container">
-    <h2>Enter Your Input</h2>
+    <h2>Enter Your Prompt</h2>
 
-    <form method="post">
-      <input type="text" name="user_input" placeholder="Type something..." required />
+    <form method="post" id="cgolForm">
+      <input type="text" name="user_input" placeholder="Type something...e.g. how many generations is in the word 'monument'" required />
       <button type="submit">Submit</button>
     </form>
 
-    {% if server_response %}
-    <div class="message">{{ server_response }}</div>
-    {% endif %}
-  </div>
+    <div class="message" id="responseRenderArea"></div>
+
+  <script>
+    const form = document.getElementById('cgolForm');
+    const responseRenderArea = document.getElementById('responseRenderArea'); 
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();  // Prevent page reload
+
+      const formData = new FormData(form);
+      const userInput = formData.get('user_input');
+
+      const response = await fetch('/', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        responseRenderArea.textContent = data.server_response || "No response";
+      } else {
+        responseRenderArea.textContent = "Error communicating with server.";
+      }
+    });
+  </script>
 </body>
 </html>

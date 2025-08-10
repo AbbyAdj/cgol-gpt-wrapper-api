@@ -2,7 +2,7 @@
 from pprint import pprint
 import os
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import JSONResponse,  HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from openai import OpenAI
@@ -23,10 +23,11 @@ def homepage(request: Request):
     return templates.TemplateResponse("frontend.html", {"request": request})
 
 
-@app.post("/", status_code=201,response_class=HTMLResponse)
-def run_cgol_game(request: Request, user_input: str =  Form(...)):
+@app.post("/", status_code=201)
+def run_cgol_game(user_input: str =  Form(...)):
     if not user_input:
-        return templates.TemplateResponse("frontend.html", {"request": request})
+        return JSONResponse(content={"server_response": None})
+
     server_response = client_response(client, user_input=user_input)
-    return templates.TemplateResponse("frontend.html", {"request": request, "server_response": server_response}, status_code=201)
+    return JSONResponse(content={"server_response": server_response}, status_code=201)
 
