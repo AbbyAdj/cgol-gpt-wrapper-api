@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FastAPI Form Demo</title>
+  <style>
+    /* Smooth gradient background */
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #e6f0ff, #cce0ff, #99c2ff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      animation: gradientShift 10s ease infinite alternate;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Glass effect container */
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 2rem 3rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #1a3c6e;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1.5px solid #ccd6f6;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"]:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 6px rgba(74,144,226,0.5);
+      outline: none;
+    }
+
+    button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #357ABD;
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      background-color: #a0bde5;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 1.2rem;
+      padding: 0.8rem;
+      background: #e8f0fe;
+      border-radius: 8px;
+      color: #1a3c6e;
+      font-weight: 600;
+      animation: fadeIn 0.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Enter Your Input</h2>
+
+    <form method="post">
+      <input type="text" name="user_input" placeholder="Type something..." required />
+      <button type="submit">Submit</button>
+    </form>
+
+    {% if server_response %}
+    <div class="message">{{ server_response }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
