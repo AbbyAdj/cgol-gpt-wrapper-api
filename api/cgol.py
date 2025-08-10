@@ -19,22 +19,12 @@ CELL_NEIGHBOURS = (
 )
 
 
-class MaxGenerationsReached(BaseException):
-    pass
-
-
-class MaxRowsExceeded(BaseException):
-    pass
-
-
-# TODO: Raise error for really long word
-
-
 def convert_to_ascii_bitmask(word: str) -> list[str]:
     result = []
-    for letter in word:
-        ascii_bin = bin(ord(letter))[2:].zfill(8)
-        result.append(ascii_bin)
+    if len(word) <= 60:
+        for letter in word:
+            ascii_bin = bin(ord(letter))[2:].zfill(8)
+            result.append(ascii_bin)
     return result
 
 
@@ -136,5 +126,5 @@ def run_game(word: str, generations: int = 1000):
 
 
 if __name__ == "__main__":
-    print(run_game("Nigeria"))
+    print(run_game("monumental"))
     pass
