@@ -3,6 +3,7 @@ from pprint import pprint
 import os
 import time
 from fastapi import FastAPI, Form, Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse,  HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -13,10 +14,12 @@ from ai_client.wrapper import client_response
 load_dotenv(override=True)
 
 API_KEY = os.environ.get("API_KEY")
-client = OpenAI(api_key=API_KEY)
+PASSWORD = os.environ.get("PASSWORD")
 
+client = OpenAI(api_key=API_KEY)
 app = FastAPI()
 templates = Jinja2Templates(directory="api/templates")
+app.mount("/static", StaticFiles(directory="api/static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -28,6 +31,7 @@ def homepage(request: Request):
 def run_cgol_game(user_input: str =  Form(...)):
     if not user_input:
         return JSONResponse(content={"server_response": None})
-    server_response = client_response(client, user_input=user_input)
-    return JSONResponse(content={"server_response": server_response}, status_code=201)
+    return JSONResponse(content={"server_response": user_input}, status_code=201)
+    # server_response = client_response(client, user_input=user_input)
+    # return JSONResponse(content={"server_response": server_response}, status_code=201)
 
