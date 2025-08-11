@@ -31,7 +31,6 @@ def homepage(request: Request):
 def run_cgol_game(user_input: str =  Form(...)):
     if not user_input:
         return JSONResponse(content={"server_response": None})
-    return JSONResponse(content={"server_response": user_input}, status_code=201)
-    # server_response = client_response(client, user_input=user_input)
-    # return JSONResponse(content={"server_response": server_response}, status_code=201)
+    server_response = client_response(client, user_input=user_input)
+    return JSONResponse(content={"server_response": server_response}, status_code=201)
 
