@@ -115,20 +115,20 @@ pytest
 
 - Testing: More tests will be added in order to ensure the integrity of the code.
 
-- Validation: More validation will be added for user inputs.
+- Validation: More validation will be added for user inputs. This will include more pydantic models for stricter enforcements.
 
 - Extensive Error handling: Error handling will be explored further to ensure integrity of code.
 
-- Rate Limiting: As we are calling Openai's APIs with each call and this can both be costly and abused, rate limits will be implemented per user to minimize costs.
+- Rate Limiting: As we are calling Openai's APIs with each call and this can both be costly and/or abused, rate limits will be implemented per user to minimize costs.
 
-- Live Animation/Simulation: An amimation is to be added for users to see a live simution of their pattern and how it evolves.
+- Live Animation/Simulation: An animation is to be added for users to see a live simulation of their pattern and how it evolves.
 
 
 ## Known Issues
 
 - For a user prompt, say "Generate 6 random words and tell me the highest Conway score and lowest generation", the tool does not return any response. However when it is called again immediately after, it runs as expected.
 
-- For the random word generation, the wrapper seems to call complex words which usually exceed 1000 generations unless explicitly stated by the user.
+- For the random word generation, the wrapper seems to call complex words which usually exceed 1000 generations unless explicitly stated by the user to use simple words.
 
 ## License
 
