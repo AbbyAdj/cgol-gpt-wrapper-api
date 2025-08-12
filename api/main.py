@@ -5,7 +5,6 @@ interaction with the OpenAI API through the ai_client.wrapper.
 """
 from pprint import pprint
 import os
-import time
 from fastapi import FastAPI, Form, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse,  HTMLResponse

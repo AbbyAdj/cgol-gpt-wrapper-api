@@ -16,7 +16,9 @@ form.addEventListener("submit", async (event) => {
   if (response.ok) {
     const data = await response.json();
     responseRenderArea.textContent = data.server_response || "Please enter a valid prompt";
+
   } else {
-    responseRenderArea.textContent = response.statusText;
+    const data = await response.json();
+    responseRenderArea.textContent = data.server_response;
   }
 });
