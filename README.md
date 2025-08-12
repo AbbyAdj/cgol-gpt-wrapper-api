@@ -51,7 +51,7 @@ pip install -r requirements.txt
 touch .env 
 
 ```
- Add an API_KEY variable to your .env file. Your server would not run without it. 
+ Add an OPENAI_API_KEY variable to your .env file. Your server would not run without it. 
 
  Either do this or export an environment variable named OPENAI_API_KEY.
 

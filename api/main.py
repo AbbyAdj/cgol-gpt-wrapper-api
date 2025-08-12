@@ -16,10 +16,11 @@ from ai_client.wrapper import client_response, ServerError, OpenAIServerError
 
 load_dotenv(override=True)
 
-API_KEY = os.environ.get("API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 PASSWORD = os.environ.get("PASSWORD")
 
-client = OpenAI(api_key=API_KEY)
+client = OpenAI(api_key=OPENAI_API_KEY)
+
 app = FastAPI()
 templates = Jinja2Templates(directory="api/templates")
 app.mount("/static", StaticFiles(directory="api/static"), name="static")

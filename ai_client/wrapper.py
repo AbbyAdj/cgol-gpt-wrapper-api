@@ -107,10 +107,8 @@ def client_response(client: OpenAI, user_input: str)->str:
         return response.output_text.replace("*", "") #The model tends to respond with double asterisks, I assume for emphasis, so I removed them
 
     except (APIConnectionError, AuthenticationError, RateLimitError) as e:
-        # print(e)
         raise ServerError()
 
     except (APITimeoutError, BadRequestError, InternalServerError) as e:
-        # print(e)
         raise OpenAIServerError()
     
