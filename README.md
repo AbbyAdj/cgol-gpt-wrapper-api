@@ -8,8 +8,6 @@ Each character of the word is converted into an 8-bit binary representation (fro
 
 The seed is centered in the grid with each letter's ASCII binary occupying a row. This pattern then evolves according to the standard Game of Life rules.
 
-The project is hosted on [this link](https://cgol-gpt-wrapper.onrender.com/)
-
 ## Features
 
 - **Word-to-Pattern Conversion**: Transform any input word into a unique Game of Life seed pattern.
