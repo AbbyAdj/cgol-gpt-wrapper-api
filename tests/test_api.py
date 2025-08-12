@@ -21,4 +21,4 @@ class TestRunCgolGame:
         client = TestClient(app)
         response = client.post("/results", data={"user_input": ""})
         assert response.status_code == 200
-        assert not response.json()["server_response"]
+        assert response.json()["server_response"] == "Invalid user input"
