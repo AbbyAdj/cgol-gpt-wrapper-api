@@ -42,6 +42,10 @@ git clone https://github.com/AbbyAdj/cgol-gpt-wrapper-api.git
 
 cd cgol-gpt-wrapper-api
 
+python -m venv venv
+
+source venv/bin/activate
+
 pip install -r requirements.txt
 
 touch .env 
