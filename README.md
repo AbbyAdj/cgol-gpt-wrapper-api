@@ -22,10 +22,10 @@ The project is hosted on [this link](https://cgol-gpt-wrapper.onrender.com/)
 2. **Word Processing**: Each character of the word is converted into its ASCII value, then into an 8-bit binary string. These binary strings form the initial pattern.
 3. **Pattern Centering**: The generated pattern is centered in the grid to maintain symmetry and consistency.
 4. **Simulation**: The Game of Life rules are applied to evolve the pattern over time, allowing users to observe the progression from the initial seed using the run_game function.
-5. **Post-Stability**: Once the pattern has reached stability (extinction, a persistent state, repeating patterns or exceeding 1000 generations), the function run_game will return a dictionary with the keys generation and score.
+5. **Post-Stability**: Once the pattern has reached stability (extinction, a persistent state, repeating patterns or exceeding 1000 generations), the function run_game will return a dictionary with the keys 'generation' and 'score'.
 The score defines the sum of all live cells during each generation.
 6. **GPT Integration**: The GPT wrapper client uses [function calling](https://platform.openai.com/docs/guides/function-calling) to call the run_game method. Depending on the prompt, the tool extracts the word(s) to be used in calling the function and returns the appropriate response to the user.
-7. **API**: There are two endpoints, the GET / renders the user interface. The POST /results with an input body, returns a json which is rendered by the frontend. Fastapi was chosen for its ease of use as an API framework and easy integration with jinja2 for frontent rendering.
+7. **API**: There are two endpoints, the 'GET /' renders the user interface. The 'POST /results' endpoint with an input body, returns a json which is rendered by the frontend. FastAPI was chosen for its ease of use as an API framework and easy integration with jinja2 for frontend rendering.
 
 ## Tech Stack
 - Python 3 (Backend logic and GPT integration)
@@ -47,7 +47,13 @@ pip install -r requirements.txt
 touch .env 
 
 ```
- add an API_KEY to your .env file. Your server would not run without it. To set this up, visit [this link](https://platform.openai.com/).
+ Add an API_KEY variable to your .env file. Your server would not run without it. 
+
+ Either do this or export an environment variable named OPENAI_API_KEY.
+
+ To set this up, visit [this link](https://platform.openai.com/).
+
+> **Tip:** Use the `.env` file for local development, and set the `OPENAI_API_KEY` environment variable directly in your production environment for better security and deployment flexibility.
 
 ---
 
@@ -71,7 +77,7 @@ Renders client side UI
 
 ### `POST /results`
 
-Generate a Game of Life seed pattern from a given word.
+Generates a Conway's Game of Life seed pattern, generations, and scores from a given prompt and returns a JSON object containing the server's response, as illustrated in the example below.
 
 **Request Body**:
 
@@ -106,8 +112,12 @@ fastapi dev api/main.py
 To run the test suite:
 
 ```bash
+# Execute the following commands in the application root
+
+export PYTHONPATH=$(pwd)
 pip install -r dev-requirements.txt
 pytest
+
 ```
 ---
 
@@ -119,6 +129,8 @@ pytest
 
 - Extensive Error handling: Error handling will be explored further to ensure integrity of code.
 
+- Logins: User logins to enforce security. 
+
 - Rate Limiting: As we are calling Openai's APIs with each call and this can both be costly and/or abused, rate limits will be implemented per user to minimize costs.
 
 - Live Animation/Simulation: An animation is to be added for users to see a live simulation of their pattern and how it evolves.
@@ -126,9 +138,9 @@ pytest
 
 ## Known Issues
 
-- For a user prompt, say "Generate 6 random words and tell me the highest Conway score and lowest generation", the tool does not return any response. However when it is called again immediately after, it runs as expected.
+- For a user prompt, for example, "Generate 6 random words and tell me the highest Conway score and lowest generation", the tool does not return any response. However when it is called again immediately after, it runs as expected.
 
-- For the random word generation, the wrapper seems to call complex words which usually exceed 1000 generations unless explicitly stated by the user to use simple words.
+- For the random word generation, the tool seems to generate complex words which usually exceed 1000 generations unless explicitly stated by the user to use simple words.
 
 ## License
 
