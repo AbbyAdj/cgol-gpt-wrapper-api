@@ -54,10 +54,10 @@ def run_cgol_game(user_input: str =  Form(...)):
     """
     try:
         if not user_input:
-            return JSONResponse(content={"server_response": None})
+            return JSONResponse(content={"server_response": "Invalid user input"})
         server_response = client_response(client, user_input=user_input)
         return JSONResponse(content={"server_response": server_response}, status_code=201)
     
     except (ServerError, OpenAIServerError) as e:
-        return JSONResponse(content={"server_response": None}, status_code=500)
+        return JSONResponse(content={"server_response": "Internal Server Error"}, status_code=500)
 
